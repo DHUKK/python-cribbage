@@ -134,7 +134,7 @@ def test_fifteens():
             {"suit": 2, "rank": 1},
             {"suit": 3, "rank": 1},
             {"suit": 4, "rank": 2},
-            {"suit": 4, "rank": 10},
+            {"suit": 4, "rank": 11},
         ]
     }
 
@@ -157,7 +157,7 @@ def test_exactly_equals():
             {"suit": 2, "rank": 1},
             {"suit": 3, "rank": 1},
             {"suit": 4, "rank": 2},
-            {"suit": 4, "rank": 10},
+            {"suit": 4, "rank": 11},
         ]
     }
 

@@ -31,7 +31,7 @@ class EqualsCondition(ScoreCondition):
         super().__init__()
 
     def check(self, hand: CardSet):
-        total = sum(card.rank for card in hand.cards)
+        total = sum(card.value for card in hand.cards)
         return 2 if total == self.n else 0
 
 
@@ -82,9 +82,9 @@ class FifteensCondition(ScoreCondition):
     def check(self, hand: CardSet):
         count = 0
         combs = []
-        card_ranks = [card.rank for card in hand.cards]
-        for i in range(len(card_ranks)):
-            combs += list(combinations(card_ranks, i + 1))
+        card_values = [card.value for card in hand.cards]
+        for i in range(len(card_values)):
+            combs += list(combinations(card_values, i + 1))
         for i in combs:
             count += 1 if sum(i) == 15 else 0
         return count * 2
