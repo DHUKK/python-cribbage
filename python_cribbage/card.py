@@ -1,6 +1,6 @@
 from pydantic import BaseModel, conint
 
-value_map = {
+_card_value_map: dict[int, int] = {
     1: 1,
     2: 2,
     3: 3,
@@ -18,12 +18,27 @@ value_map = {
 
 
 class Card(BaseModel, frozen=True):
+    """Representation of a playing card"""
+
     rank: conint(ge=1, le=13)
     suit: conint(ge=1, le=4)
 
     @property
     def value(self) -> int:
-        return value_map[self.rank]
+        """Get the value of the playing card.
+
+        Returns:
+            int: The value of the playing card. Between 1 and 10.
+        """
+        return _card_value_map[self.rank]
 
     def pair(self, card: "Card") -> bool:
+        """Determine whether a playing card pairs another playing card.
+
+        Args:
+            card (Card): Card to check if this card pairs.
+
+        Returns:
+            bool: Whether the card pairs this card.
+        """
         return card.rank == self.rank
