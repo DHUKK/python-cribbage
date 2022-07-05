@@ -9,6 +9,7 @@ from python_cribbage.hand_scoring import (
     FlushCondition,
     FifteensCondition,
     EqualsCondition,
+    HandScoring,
 )
 
 
@@ -50,6 +51,78 @@ def test_straight_in_hand():
             {"suit": 2, "rank": 3},
             {"suit": 4, "rank": 5},
             {"suit": 1, "rank": 4},
+        ]
+    }
+
+    hand = CardSet.parse_obj(input_data)
+
+    assert 3 == StraightInHandCondition().check(hand)
+
+    input_data = {
+        "cards": [
+            {"suit": 1, "rank": 8},
+            {"suit": 3, "rank": 9},
+            {"suit": 2, "rank": 10},
+            {"suit": 4, "rank": 10},
+            {"suit": 1, "rank": 10},
+        ]
+    }
+
+    hand = CardSet.parse_obj(input_data)
+
+    assert 9 == StraightInHandCondition().check(hand)
+
+    input_data = {
+        "cards": [
+            {"suit": 1, "rank": 8},
+            {"suit": 3, "rank": 8},
+            {"suit": 2, "rank": 9},
+            {"suit": 4, "rank": 10},
+            {"suit": 1, "rank": 10},
+        ]
+    }
+
+    hand = CardSet.parse_obj(input_data)
+
+    assert 12 == StraightInHandCondition().check(hand)
+
+    input_data = {
+        "cards": [
+            {"suit": 1, "rank": 8},
+            {"suit": 3, "rank": 9},
+            {"suit": 2, "rank": 10},
+            {"suit": 4, "rank": 11},
+            {"suit": 1, "rank": 9},
+        ]
+    }
+
+    hand = CardSet.parse_obj(input_data)
+
+    assert 8 == StraightInHandCondition().check(hand)
+
+    input_data = {
+        "cards": [
+            {"suit": 1, "rank": 8},
+            {"suit": 3, "rank": 9},
+            {"suit": 2, "rank": 10},
+            {"suit": 4, "rank": 11},
+            {"suit": 1, "rank": 11},
+            {"suit": 3, "rank": 11},
+            {"suit": 2, "rank": 11},
+        ]
+    }
+
+    hand = CardSet.parse_obj(input_data)
+
+    assert 16 == StraightInHandCondition().check(hand)
+
+    input_data = {
+        "cards": [
+            {"suit": 1, "rank": 8},
+            {"suit": 3, "rank": 9},
+            {"suit": 2, "rank": 13},
+            {"suit": 4, "rank": 12},
+            {"suit": 1, "rank": 2},
         ]
     }
 
@@ -170,3 +243,33 @@ def test_exactly_equals():
     card_set = CardSet.parse_obj(input_data)
 
     assert 0 == EqualsCondition(15).check(card_set)
+
+
+def test_all_hand_scoring():
+    input_data = {
+        "cards": [
+            {"suit": 1, "rank": 8},
+            {"suit": 3, "rank": 9},
+            {"suit": 2, "rank": 10},
+            {"suit": 4, "rank": 10},
+            {"suit": 1, "rank": 10},
+        ]
+    }
+
+    hand = CardSet.parse_obj(input_data)
+
+    assert 15 == HandScoring().score(hand)
+
+    input_data = {
+        "cards": [
+            {"suit": 1, "rank": 8},
+            {"suit": 3, "rank": 8},
+            {"suit": 2, "rank": 7},
+            {"suit": 4, "rank": 7},
+            {"suit": 1, "rank": 9},
+        ]
+    }
+
+    hand = CardSet.parse_obj(input_data)
+
+    assert 24 == HandScoring().score(hand)

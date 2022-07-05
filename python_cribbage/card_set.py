@@ -59,3 +59,16 @@ class CardSet(BaseModel, frozen=True):
             int: Number of cards in the set.
         """
         return len(self.cards)
+
+    def __add__(self, other):
+        """Add two card sets together
+
+        Args:
+            other (CardSet): cardset to add
+
+        Returns:
+            CardSet: New cardset with cards from self and other
+        """
+        if isinstance(other, Card):
+            return CardSet(cards=self.cards + [other])
+        return CardSet(cards=self.cards + other.cards)

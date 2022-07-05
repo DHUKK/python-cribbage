@@ -1,10 +1,23 @@
 from itertools import combinations
-from abc import ABCMeta, abstractmethod
+import math
 from python_cribbage.card_set import CardSet
 from collections import Counter
 
 
 PAIR_SCORES: dict[int, int] = {1: 0, 2: 2, 3: 6, 4: 12}
+
+
+class HandScoring:
+    def score(self, hand: CardSet):
+        total_score = 0
+        for i in [
+            PairsCondition(),
+            StraightInHandCondition(),
+            FifteensCondition(),
+            FlushCondition(),
+        ]:
+            total_score += i.check(hand)
+        return total_score
 
 
 class PairsCondition:
@@ -31,9 +44,8 @@ class StraightInHandCondition:
         ans = 0
         count = 0
 
-        arr = hand.ranks
-        n = len(arr)
-        v = [arr[0]]
+        arr = sorted(hand.ranks)
+        n, v = len(arr), [arr[0]]
 
         for i in range(1, n):
             if arr[i] != arr[i - 1]:
@@ -45,6 +57,14 @@ class StraightInHandCondition:
             else:
                 count = 1
             ans = max(ans, count)
+
+        if ans >= 3:
+            count = Counter(arr)
+            mul = []
+            for i in v:
+                if count[i] > 1:
+                    mul.append(count[i])
+            return ans * math.prod(mul)
         return ans if ans >= 3 else 0
 
 
