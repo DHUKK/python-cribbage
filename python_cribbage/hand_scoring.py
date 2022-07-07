@@ -2,9 +2,9 @@ from itertools import combinations
 import math
 from python_cribbage.card_set import CardSet
 from collections import Counter
+from typing import Dict
 
-
-PAIR_SCORES: dict[int, int] = {1: 0, 2: 2, 3: 6, 4: 12}
+PAIR_SCORES: Dict[int, int] = {1: 0, 2: 2, 3: 6, 4: 12}
 
 
 class HandScoring:
