@@ -20,7 +20,7 @@ class GameHand(BaseModel):
         if not cut_card:
             raise ValueError("Invalid cut card")
         deck = values.get("deck")
-        if not cut_card:
+        if not deck:
             raise ValueError("Invalid deck")
         combined_cards = deck + cut_card
         for hand in hands:
