@@ -1,6 +1,7 @@
 from pydantic import BaseModel, conint
+from typing import Dict
 
-_card_value_map: dict[int, int] = {
+_card_value_map: Dict[int, int] = {
     1: 1,
     2: 2,
     3: 3,
