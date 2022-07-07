@@ -55,3 +55,34 @@ def test_card_set_add():
     added_cardset = CardSet.parse_obj(input_data)
 
     assert added_cardset == cardset + cardset2
+
+
+def test_pick_random_cards():
+    input_data = {
+        "cards": [
+            {"rank": 1, "suit": 1},
+            {"rank": 10, "suit": 1},
+            {"rank": 3, "suit": 1},
+            {"rank": 1, "suit": 2},
+            {"rank": 10, "suit": 2},
+            {"rank": 3, "suit": 2},
+        ]
+    }
+    cards = CardSet.parse_obj(input_data)
+
+    sub = cards.pick_random_cards(3)
+    cards_sub = cards - sub
+
+    cards_add = cards_sub + sub
+    assert True == all(elem in cards_add.cards for elem in cards.cards)
+
+
+def test_random_cards():
+    cards = CardSet.random_cards(52)
+    assert 52 == len(cards)
+
+    cards = CardSet.random_cards(21)
+    assert 21 == len(cards)
+
+    cards = CardSet.random_cards()
+    assert 52 == len(cards)

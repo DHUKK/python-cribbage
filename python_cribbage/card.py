@@ -16,6 +16,9 @@ _card_value_map: dict[int, int] = {
     13: 10,
 }
 
+card_suits = [1, 2, 3, 4]
+card_ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+
 
 class Card(BaseModel, frozen=True):
     """Representation of a playing card"""

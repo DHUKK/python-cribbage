@@ -1,6 +1,9 @@
+from random import shuffle
 from pydantic import BaseModel, validator
 from typing import List
-from python_cribbage.card import Card
+from python_cribbage.card import Card, card_ranks, card_suits
+from itertools import product
+import random
 
 
 class CardSet(BaseModel, frozen=True):
@@ -72,3 +75,21 @@ class CardSet(BaseModel, frozen=True):
         if isinstance(other, Card):
             return CardSet(cards=self.cards + [other])
         return CardSet(cards=self.cards + other.cards)
+
+    def __sub__(self, other):
+        if isinstance(other, Card):
+            return CardSet(cards=[item for item in self.cards if item != other])
+        return CardSet(cards=[item for item in self.cards if item not in other.cards])
+
+    def pick_random_cards(self, n: int = 1):
+        ret_cards = self.cards
+        shuffle(ret_cards)
+        return CardSet(cards=ret_cards[0:n])
+
+    @classmethod
+    def random_cards(cls, n: int = 52) -> "CardSet":
+        cards = []
+        for suit, rank in product(card_suits, card_ranks):
+            cards.append(Card(suit=suit, rank=rank))
+        random.shuffle(cards)
+        return CardSet(cards=cards[0:n])
