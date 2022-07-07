@@ -5,11 +5,11 @@ description = ""
 authors = ["Dennis Harrop <dennisjohnharrop@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.7"
 pydantic = "^1.9.1"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^7.1.2"
 black = "^22.6.0"
 
 [build-system]
